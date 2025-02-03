@@ -164,6 +164,8 @@ export default function ContentList({
         }
     };
 
+    
+
     return (
     <div ref = {component}>
         <ul className="grid border-b border-b-slate-100" 
@@ -172,7 +174,7 @@ export default function ContentList({
             <>
             {isFilled.keyText(item.data.title) && (
             <li key = {index}
-                ref={(el) => (itemsRef.current[index] = el)}
+                ref={(el) => {itemsRef.current[index] = el}}
                 className="list-item opacity-0"
                 onMouseEnter={() => onMouseEnter(index)}
                 onClick={(e) => handleClick(e, item.data.link?.url)}

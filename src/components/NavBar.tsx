@@ -9,6 +9,7 @@ import { MdMenu, MdClose } from "react-icons/md";
 import Button from "./Button";
 import { usePathname } from "next/navigation";
 
+
 export default function NavBar({
   settings,
 }: {
@@ -16,6 +17,8 @@ export default function NavBar({
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const ctaHref = asLink(settings.data.cta_link) || "#"; // fallback if null
+
 
   // Filter out the "Blog" item
   const filteredNavItems = settings.data.nav_item.filter(
@@ -60,7 +63,7 @@ export default function NavBar({
                   field={link}
                   onClick={() => setOpen(false)}
                   aria-current={
-                    pathname.includes(asLink(link) as string)
+                    pathname?.includes(asLink(link) as string)
                       ? "page"
                       : undefined
                   }
@@ -68,7 +71,7 @@ export default function NavBar({
                   <span
                     className={clsx(
                       "absolute inset-0 z-0 h-full translate-y-12 rounded bg-yellow-300 transition-transform duration-300 ease-in-out group-hover:translate-y-0",
-                      pathname.includes(asLink(link) as string)
+                      pathname?.includes(asLink(link) as string)
                         ? "translate-y-6"
                         : "translate-y-18",
                     )}
@@ -88,14 +91,15 @@ export default function NavBar({
           ))}
           <li>
             <a
-              href={`mailto:${settings.data.cta_link.url}`}
+              href={`mailto:${ctaHref}`}
               className="ml-3 inline-block rounded bg-yellow-500 px-4 py-2 text-white font-bold"
             >
               {settings.data.cta_label}
             </a>
           </li>
         </div>
-        <DesktopMenu settings={settings} pathname={pathname} />
+        <DesktopMenu settings={settings} pathname={pathname ?? ""}
+ />
       </ul>
     </nav>
   );
@@ -124,6 +128,8 @@ function DesktopMenu({
   const filteredNavItems = settings.data.nav_item.filter(
     (item) => item.label !== "Blog"
   );
+
+  const ctaHref = asLink(settings.data.cta_link) || "#"; // fallback if null
 
   return (
     <div className="relative z-50 hidden flex-row items-center gap-1 bg-transparent py-0 md:flex">
@@ -162,7 +168,7 @@ function DesktopMenu({
       ))}
       <li>
         <a
-          href={`mailto:${settings.data.cta_link.url}`}
+          href={`mailto:${ctaHref}`}
           className="ml-3 inline-block rounded bg-yellow-500 px-4 py-2 text-white font-bold"
         >
           {settings.data.cta_label}
