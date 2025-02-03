@@ -1,6 +1,6 @@
 "use client";
 
-import { asImageSrc, Content, isFilled } from "@prismicio/client";
+import { asImageSrc, asLink, Content, isFilled } from "@prismicio/client";
 import Link from "next/link";
 import React, { useRef, useState, useEffect } from "react";
 import { MdArrowOutward } from "react-icons/md";
@@ -173,12 +173,21 @@ export default function ContentList({
         {items.map((item, index) => (
             <>
             {isFilled.keyText(item.data.title) && (
-            <li key = {index}
-                ref={(el) => {itemsRef.current[index] = el}}
-                className="list-item opacity-0"
-                onMouseEnter={() => onMouseEnter(index)}
-                onClick={(e) => handleClick(e, item.data.link?.url)}
-            >
+            <li
+            key={index}
+            ref={(el) => {
+              itemsRef.current[index] = el;
+            }}
+            className="list-item opacity-0"
+            onMouseEnter={() => onMouseEnter(index)}
+            onClick={(e) => {
+              e.preventDefault();
+              // Safely access the link property if it exists.
+              const maybeLink =
+                "link" in item.data ? asLink(item.data.link) : undefined;
+              if (maybeLink) window.location.href = maybeLink;
+            }}
+          >
 
                 <div className="flex flex-col justify-between border-t border-t-slate-100 py-10  text-slate-200 md:flex-row "
                     aria-label={item.data.title}>
