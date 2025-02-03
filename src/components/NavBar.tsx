@@ -17,6 +17,11 @@ export default function NavBar({
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  // Filter out the "Blog" item
+  const filteredNavItems = settings.data.nav_item.filter(
+    (item) => item.label !== "Blog"
+  );
+
   return (
     <nav aria-label="Main navigation">
       <ul className="flex flex-col justify-between rounded-b-lg bg-slate-50 px-4 py-2 md:m-4 md:flex-row md:items-center md:rounded-xl">
@@ -45,7 +50,7 @@ export default function NavBar({
           >
             <MdClose />
           </button>
-          {settings.data.nav_item.map(({ link, label }, index) => (
+          {filteredNavItems.map(({ link, label }, index) => (
             <React.Fragment key={label}>
               <li className="first:mt-8">
                 <PrismicNextLink
@@ -71,7 +76,7 @@ export default function NavBar({
                   <span className="relative">{label}</span>
                 </PrismicNextLink>
               </li>
-              {index < settings.data.nav_item.length - 1 && (
+              {index < filteredNavItems.length - 1 && (
                 <span
                   className="hidden text-4xl font-thin leading-[0] text-slate-400 md:inline"
                   aria-hidden="true"
@@ -82,11 +87,12 @@ export default function NavBar({
             </React.Fragment>
           ))}
           <li>
-            <Button
-              linkField={settings.data.cta_link}
-              label={settings.data.cta_label}
-              className="ml-3"
-            />
+            <a
+              href={`mailto:${settings.data.cta_link.url}`}
+              className="ml-3 inline-block rounded bg-yellow-500 px-4 py-2 text-white font-bold"
+            >
+              {settings.data.cta_label}
+            </a>
           </li>
         </div>
         <DesktopMenu settings={settings} pathname={pathname} />
@@ -114,9 +120,14 @@ function DesktopMenu({
   settings: Content.SettingsDocument;
   pathname: string;
 }) {
+  // Filter out the "Blog" item
+  const filteredNavItems = settings.data.nav_item.filter(
+    (item) => item.label !== "Blog"
+  );
+
   return (
     <div className="relative z-50 hidden flex-row items-center gap-1 bg-transparent py-0 md:flex">
-      {settings.data.nav_item.map(({ link, label }, index) => (
+      {filteredNavItems.map(({ link, label }, index) => (
         <React.Fragment key={label}>
           <li>
             <PrismicNextLink
@@ -139,7 +150,7 @@ function DesktopMenu({
               <span className="relative">{label}</span>
             </PrismicNextLink>
           </li>
-          {index < settings.data.nav_item.length - 1 && (
+          {index < filteredNavItems.length - 1 && (
             <span
               className="hidden text-4xl font-thin leading-[0] text-slate-400 md:inline"
               aria-hidden="true"
@@ -150,11 +161,12 @@ function DesktopMenu({
         </React.Fragment>
       ))}
       <li>
-        <Button
-          linkField={settings.data.cta_link}
-          label={settings.data.cta_label}
-          className="ml-3"
-        />
+        <a
+          href={`mailto:${settings.data.cta_link.url}`}
+          className="ml-3 inline-block rounded bg-yellow-500 px-4 py-2 text-white font-bold"
+        >
+          {settings.data.cta_label}
+        </a>
       </li>
     </div>
   );

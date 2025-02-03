@@ -133,8 +133,8 @@ export default function ContentList({
           : fallbackItemImage;
         return asImageSrc(image, {
           fit: "crop",
-          w: 220,
-          h: 320,
+          w: 320, // Adjust width for horizontal orientation
+          h: 220, // Adjust height for horizontal orientation
           exp: -10,
         });
       });
@@ -157,6 +157,13 @@ export default function ContentList({
         setCurrentItem(null);
       };
 
+      const handleClick = (event: React.MouseEvent, link: string | undefined) => {
+        event.preventDefault(); // Prevent any default navigation behavior
+        if (link) {
+            window.location.href = link;
+        }
+    };
+
     return (
     <div ref = {component}>
         <ul className="grid border-b border-b-slate-100" 
@@ -168,9 +175,10 @@ export default function ContentList({
                 ref={(el) => (itemsRef.current[index] = el)}
                 className="list-item opacity-0"
                 onMouseEnter={() => onMouseEnter(index)}
+                onClick={(e) => handleClick(e, item.data.link?.url)}
             >
-                <Link href={urlPrefix + "/" + item.uid} 
-                    className="flex flex-col justify-between border-t border-t-slate-100 py-10  text-slate-200 md:flex-row "
+
+                <div className="flex flex-col justify-between border-t border-t-slate-100 py-10  text-slate-200 md:flex-row "
                     aria-label={item.data.title}>
                     <div className="flex flex-col">
                         <span className="text-3xl font-bold">{item.data.title}</span>
@@ -183,7 +191,7 @@ export default function ContentList({
                     <span className="ml-auto flex items-center gap-2 text-xl font-medium md:ml-0">
                         {viewMoreText} <MdArrowOutward />
                     </span>
-                </Link>
+                </div>
             </li>
             )}
             </>
@@ -191,7 +199,7 @@ export default function ContentList({
         </ul>
         {/* Hover element */}
         <div
-          className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[320px] w-[220px] rounded-lg bg-cover bg-center opacity-0f transition-[background] duration-300"
+          className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[220px] w-[320px] rounded-lg bg-cover bg-center opacity-0f transition-[background] duration-300"
           style={{
             backgroundImage: 
               currentItem !== null ? `url(${contentImages[currentItem]})` : "",

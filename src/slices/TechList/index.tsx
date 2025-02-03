@@ -30,7 +30,7 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
           pin: true, // pin the trigger element while active
           start: "top bottom",
           end: "bottom top",
-          scrub: 6,
+          scrub: 4,
         },
       });
 
