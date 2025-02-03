@@ -1,37 +1,28 @@
-// import { useRouter } from 'next/router';
-// import { getAllProjects, getProjectBySlug } from '@/lib/api';
+// pages/projects/[slug].tsx
 
-// const ProjectPage = ({ project }) => {
-//   const router = useRouter();
+import React from "react";
 
-//   if (!router.isFallback && !project?.slug) {
-//     return <p>404 - Project not found</p>;
-//   }
+type ProjectPageProps = {
+  // your props here
+};
 
-//   return (
-//     <div>
-//       <h1>{project.title}</h1>
-//       <p>{project.description}</p>
-//       {/* Render other project details */}
-//     </div>
-//   );
-// };
+export default function ProjectPage({ /* props */ }: ProjectPageProps) {
+  return <div>Your project page goes here</div>;
+}
 
-// export async function getStaticPaths() {
-//   const projects = await getAllProjects();
-//   const paths = projects.map((project) => ({
-//     params: { slug: project.slug },
-//   }));
+// If you’re doing SSG or SSR:
+import { GetStaticPropsContext, GetStaticPropsResult } from 'next';
 
-//   return { paths, fallback: false };
-// }
+interface StaticProps {
+    // your props here
+}
 
-// export async function getStaticProps({ params }) {
-//   const project = await getProjectBySlug(params.slug);
+export async function getStaticProps(context: GetStaticPropsContext): Promise<GetStaticPropsResult<StaticProps>> {
+    // ...
+    return { props: {} };
+}
 
-//   return {
-//     props: { project },
-//   };
-// }
-
-// export default ProjectPage;
+export async function getStaticPaths() {
+  // ...
+  return { paths: [], fallback: "blocking" };
+}
