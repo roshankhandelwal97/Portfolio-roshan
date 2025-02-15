@@ -579,6 +579,16 @@ export interface BiographySliceDefaultPrimary {
    * - **Documentation**: https://prismic.io/docs/field#image
    */
   avatar: prismic.ImageField<never>;
+
+  /**
+   * video field in *Biography → Default → Primary*
+   *
+   * - **Field Type**: Embed
+   * - **Placeholder**: *None*
+   * - **API ID Path**: biography.default.primary.video
+   * - **Documentation**: https://prismic.io/docs/field#embed
+   */
+  video: prismic.EmbedField;
 }
 
 /**

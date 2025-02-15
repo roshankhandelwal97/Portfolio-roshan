@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { PrismicPreview } from "@prismicio/next";
 import { createClient, repositoryName } from "@/prismicio";
 import clsx from "clsx";
-
+import { Analytics } from "@vercel/analytics/react";
 
 const urbanist = Urbanist({
   subsets: ["latin"],
@@ -39,6 +39,7 @@ export default function RootLayout({
         <div className="pointer-events-none absolute inset-0 -z-40 h-full bg-[url('/noisetexture.jpg')] opacity-20 mix-blend-soft-light"></div>
         <Footer />
         <PrismicPreview repositoryName={repositoryName} />
+        <Analytics />
       </body>
     </html>
   );
